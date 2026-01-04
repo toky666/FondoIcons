@@ -6,7 +6,7 @@
 	const d = document;
 	const btnDarkMode = d.querySelector("[data-toogle]") as HTMLElement;
 
-	function shortCircuit(set_in_milisec) {
+	function shortCircuit(callback: () => void) {
 		let audio = new Audio();
 		audio.src = "../sounds/short_circuit.mp3";
 		audio.volume -= 0.6;
@@ -44,7 +44,7 @@
 	const useCircuit = window.matchMedia("(prefers-color-scheme: short-circuit)");
 
 	// Toggles the "dark-mode" class
-	export default function toggleDarkMode(state) {
+	export default function toggleDarkMode(state: boolean) {
 		d.documentElement.classList.toggle("dark-mode", state);
 		darkModeState = state;
 		if (d.documentElement.classList.contains("dark-mode")) {
@@ -56,8 +56,8 @@
 		}
 	}
 	// Sets localStorage state
-	function setDarkModeLocalStorage(state) {
-		localStorage.setItem("dark-mode", state);
+	function setDarkModeLocalStorage(state: boolean) {
+		localStorage.setItem("dark-mode", JSON.stringify(state));
 	}
 	// Initial setting
 	toggleDarkMode(localStorage.getItem("dark-mode") == "true");
@@ -67,7 +67,8 @@
 
 
 	// Listen for changes in the OS settings.
-	useDark.addEventListener("state", (evt) => toggleDarkMode(evt.matches));
+	//useDark.addEventListener("state", (evt) => toggleDarkMode(evt.matches));
+	useDark.addEventListener("change", (evt: MediaQueryListEvent) => { toggleDarkMode(evt.matches); });
 	// Toggles the "dark-mode" class on click and sets localStorage state
 	toogleDarkMode.addEventListener("click", (clickHandler) => {
 		darkModeState = !darkModeState;
