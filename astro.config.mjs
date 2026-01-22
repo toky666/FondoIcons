@@ -7,8 +7,6 @@ import sitemap from "@astrojs/sitemap";
 
 import mdx from "@astrojs/mdx";
 
-import tailwindcss from "@tailwindcss/vite";
-
 // https://astro.build/config
 export default defineConfig({
   build: {
@@ -32,8 +30,4 @@ export default defineConfig({
 
   site: "https://itssofi.dev/",
   integrations: [solidJs(), sitemap(), mdx()],
-
-  vite: {
-    plugins: [tailwindcss()],
-  },
 });
